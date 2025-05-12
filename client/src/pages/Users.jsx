@@ -44,7 +44,7 @@ const Users = () => {
       {/* Top Bar */}
       <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4">
         <button
-          className="w-full md:w-64 p-2 bg-blue-500 text-white rounded shadow-md"
+          className="w-full md:w-40  p-2 bg-blue-500 hover:bg-amber-50 hover:text-black text-white rounded shadow-md"
           onClick={handleAddUser}
         >
           Add User
@@ -86,10 +86,10 @@ const Users = () => {
               <p className="text-gray-600">📞 {user.number}</p>
 
               <div className="flex justify-between mt-3">
-                <button className="shadow-sm hover:text-violet-500">
+                <button className="shadow-sm w-15 rounded-sm hover:text-violet-500">
                   Edit
                 </button>
-                <button className="shadow-sm hover:text-red-500">Delete</button>
+                <button className="shadow-sm w-20 rounded-sm  hover:text-red-500">Delete</button>
               </div>
             </div>
           ))

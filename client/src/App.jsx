@@ -10,6 +10,7 @@ import Users from "./pages/Users";
 import Products from "./pages/Products";
 import AddUser from "./pages/AddUser";
 import UserVerification from "./pages/UserVerification";
+import Footer from "./conponenets/Footer";
 
 function App() {
   const location = useLocation();
@@ -65,7 +66,9 @@ function App() {
           }
         />
       </Routes>
+      <Footer/>
     </>
+    
   );
 }
 

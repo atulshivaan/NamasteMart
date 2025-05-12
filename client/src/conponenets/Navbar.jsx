@@ -21,7 +21,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md m-2 rounded-sm px-6 py-4 flex items-center justify-between relative">
+    <nav className="bg-white shadow-md px-6 py-4 flex items-center justify-between relative">
       {/* Logo */}
       <div className="text-xl font-bold text-black">QuickyGiky</div>
 
@@ -50,7 +50,7 @@ const Navbar = () => {
             Products
           </Link>
 
-          {/* Logout Icon for mobile */}
+          {/* Logout Icon for Mobile */}
           <div
             className="flex md:hidden items-center gap-2 text-red-600 mt-2 cursor-pointer"
             onClick={handleLogout}
@@ -61,7 +61,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Logout Icon for desktop */}
+      {/* Logout Icon for Desktop */}
       <FiLogOut
         onClick={handleLogout}
         className="text-xl cursor-pointer hidden md:block text-red-600"
