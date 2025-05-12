@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { FaCheckCircle } from "react-icons/fa";
-import  { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { CiSearch } from "react-icons/ci";
 
 const Users = () => {
-    const navigate = useNavigate();
-  const [users, setUser] = useState([]);
- const handleAddUser =()=>{
-   navigate('/add-user');
- }
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleAddUser = () => {
+    navigate("/add-user");
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await axiosInstance.get("/api/v1/get-users");
         if (res.data.success) {
-          setUser(res.data.users || []);
+          setUsers(res.data.users || []);
         } else {
           console.error("No user found:", res.data.message);
         }
@@ -27,26 +30,42 @@ const Users = () => {
     fetchUsers();
   }, []);
 
+  const filteredUsers = users.filter((user) => {
+    const lowerSearch = searchTerm.toLowerCase();
+    return (
+      user.name?.toLowerCase().includes(lowerSearch) ||
+      user.email?.toLowerCase().includes(lowerSearch) ||
+      user.number?.toString().includes(lowerSearch)
+    );
+  });
+
   return (
-    <div className="flex flex-col items-center justify-start gap-6 p-6 bg-gray-100 h-screen">
-      {/* Full Width Add User Button */}
-      <div className="w-full flex justify-center mb-4">
-        <button 
-          className="w-64 p-2 bg-blue-500 text-white rounded"
+    <div className="flex flex-col items-center gap-6 p-6 bg-gray-100 min-h-screen">
+      {/* Top Bar */}
+      <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4">
+        <button
+          className="w-full md:w-64 p-2 bg-blue-500 text-white rounded shadow-md"
           onClick={handleAddUser}
         >
-         Add User
+          Add User
         </button>
+
+        <div className="flex items-center gap-2 border border-gray-300 rounded px-2">
+          <input
+            className="p-2 outline-none"
+            type="text"
+            placeholder="Search users..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <CiSearch className="text-2xl text-gray-600" />
+        </div>
       </div>
-      
-      {/* Divider */}
-      <hr className="w-full" />
-      <br />
-      
+
       {/* User Cards */}
       <div className="flex flex-wrap justify-center gap-6 w-full">
-        {Array.isArray(users) && users.length > 0 ? (
-          users.map((user, index) => (
+        {filteredUsers.length > 0 ? (
+          filteredUsers.map((user, index) => (
             <div
               key={index}
               className="relative w-64 p-4 bg-white rounded-2xl shadow-lg border border-gray-200"
@@ -60,13 +79,22 @@ const Users = () => {
                 />
               )}
 
-              <h2 className="text-xl font-semibold text-gray-800">{user.name}</h2>
+              <h2 className="text-xl font-semibold text-gray-800">
+                {user.name}
+              </h2>
               <p className="text-gray-600">{user.email}</p>
               <p className="text-gray-600">📞 {user.number}</p>
+
+              <div className="flex justify-between mt-3">
+                <button className="shadow-sm hover:text-violet-500">
+                  Edit
+                </button>
+                <button className="shadow-sm hover:text-red-500">Delete</button>
+              </div>
             </div>
           ))
         ) : (
-          <p>No users found.</p>
+          <p className="text-gray-500 mt-4">No users found.</p>
         )}
       </div>
     </div>

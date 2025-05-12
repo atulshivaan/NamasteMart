@@ -57,7 +57,7 @@ localStorage.setItem("email", user.email);
   return (
     <div className="w-screen h-screen bg-white flex flex-col">
       
-      <div className="w-full h-[30%] bg-blue-400 relative">
+      <div className="w-full h-[40%] bg-blue-600 relative">
       
         <div className="absolute left-1/2 transform -translate-x-1/2 top-[70%] w-[90%] sm:w-[70%] md:w-[50%] lg:w-[30%] bg-white p-6 shadow-2xl rounded">
           <h2 className="text-xl text-center font-semibold mb-4">
