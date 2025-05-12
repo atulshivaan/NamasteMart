@@ -1,16 +1,23 @@
-
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../utils/axiosInstance";
-
-// inside your component:
-const navigate = useNavigate();
+import { useEffect } from "react";
 
 
-const response = await axiosInstance.post("/api/v1/admin/login", user);
+const ProtectedRoute = ({ children }) => {
+  const navigate = useNavigate();
 
-if (response.data.success && response.data.admin) {
-  localStorage.setItem("isAdmin", "true");
-  navigate("/home");  
-} else {
-  alert("You are not authorized as an admin.");
-}
+  useEffect(() => {
+    const isAdmin = localStorage.getItem("isAdmin");
+
+    if (isAdmin === "true") {
+      // User is considered an admin
+      return;
+    } else {
+      alert("You are not authorized as an admin.");
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  return children;
+};
+
+export default ProtectedRoute;

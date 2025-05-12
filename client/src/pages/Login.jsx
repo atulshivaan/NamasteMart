@@ -9,45 +9,51 @@ const Login = () => {
 
   })
 
-  const handleChange =(e)=>{
-const {name,value} =e.target;
-setUser((prevUser)=>({
-  ...prevUser , [name]:value
-}))
-  }
-  const handleSubmit=async(e)=>{
-    e.preventDefault();
-
-    if(!user.password){
-      alert("Password is required")
-      return;
-    }
-    try {
-      const response =await axiosInstance.post("/api/v1/admin/login",user);
-      console.log(response.data);
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setUser((prevUser) => {
+    const updatedUser = { ...prevUser, [name]: value };
     
-   if (response.data.success && response.data.admin) {
-      localStorage.setItem("isAdmin", "true");  
-      navigate("/home");                       
+    return updatedUser;
+  });
+};
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!user.password) {
+    alert("Password is required");
+    return;
+  }
+
+  console.log("Login attempt:", user);  // Log the user object to check if email and password are set
+
+  try {
+    const response = await axiosInstance.post("/api/v1/admin/login", user);
+    console.log(response.data);
+localStorage.setItem("isAdmin", "true");
+localStorage.setItem("email", user.email);
+    if (response.data.success && response.data.admin) {
+      localStorage.setItem("isAdmin", "true");
+      navigate("/home");
     } else {
       alert("You are not authorized as an admin.");
     }
-      //resetform
-      setUser({
-        email:"",
-        password:""
-      });
-        navigate("/home");
-      
-    } catch (error) {
-      console.error(
-        "Error logging in:",
-        error.response ? error.response.data : error.message
-      );
-      alert("An error occurred while logging in. Please try again.");
-    }
 
+    // Reset form
+    setUser({
+      email: "",
+      password: ""
+    });
+
+  } catch (error) {
+    console.error(
+      "Error logging in:",
+      error.response ? error.response.data : error.message
+    );
+    alert("An error occurred while logging in. Please try again.");
   }
+};
+
   return (
     <div className="w-screen h-screen bg-white flex flex-col">
       

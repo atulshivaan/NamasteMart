@@ -1,16 +1,18 @@
-import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
-import './App.css';
+import { Route, Routes, useLocation, Navigate } from "react-router-dom";
+import "./App.css";
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Navbar from './conponenets/Navbar';
-import ProtectedRoute from './config/ProtectedRoutes';
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 
+import Navbar from "./conponenets/Navbar";
+import ProtectedRoute from "./config/ProtectedRoutes";
+import Users from "./pages/Users";
+import Products from "./pages/Products";
 
 function App() {
   const location = useLocation();
-  const hideNavbar = location.pathname === '/login' || location.pathname === '/signup';
+  const hideNavbar =
+    location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <>
@@ -18,7 +20,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
 
         {/* Protected Dashboard Routes */}
         <Route
@@ -29,7 +30,22 @@ function App() {
             </ProtectedRoute>
           }
         />
-       
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );
