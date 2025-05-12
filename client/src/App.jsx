@@ -8,6 +8,8 @@ import Navbar from "./conponenets/Navbar";
 import ProtectedRoute from "./config/ProtectedRoutes";
 import Users from "./pages/Users";
 import Products from "./pages/Products";
+import AddUser from "./pages/AddUser";
+import UserVerification from "./pages/UserVerification";
 
 function App() {
   const location = useLocation();
@@ -43,6 +45,22 @@ function App() {
           element={
             <ProtectedRoute>
               <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add-user"
+          element={
+            <ProtectedRoute>
+              <AddUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/verify-user"
+          element={
+            <ProtectedRoute>
+              <UserVerification />
             </ProtectedRoute>
           }
         />

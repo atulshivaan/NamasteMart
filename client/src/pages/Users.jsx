@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { FaCheckCircle } from "react-icons/fa";
+import  { useNavigate } from "react-router-dom"
 
 const Users = () => {
+    const navigate = useNavigate();
   const [users, setUser] = useState([]);
-  const [isFormVisible, setIsFormVisible] = useState(false);
+ const handleAddUser =()=>{
+   navigate('/add-user');
+ }
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -27,11 +31,11 @@ const Users = () => {
     <div className="flex flex-col items-center justify-start gap-6 p-6 bg-gray-100 h-screen">
       {/* Full Width Add User Button */}
       <div className="w-full flex justify-center mb-4">
-        <button
+        <button 
           className="w-64 p-2 bg-blue-500 text-white rounded"
-          onClick={() => setIsFormVisible(!isFormVisible)}
+          onClick={handleAddUser}
         >
-          {isFormVisible ? "Cancel" : "Add User"}
+         Add User
         </button>
       </div>
       
